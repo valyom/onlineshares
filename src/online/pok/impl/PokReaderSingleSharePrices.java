@@ -78,7 +78,7 @@ public abstract class PokReaderSingleSharePrices implements PokSharesAtDate {
     private void printCaptionIfNot() {
         if (!captionPrinted) {
             captionPrinted = true;
-            System.out.println(String.format("      Date %7s   %7s   %7s   %7s   %7s   %7s  %7s   %7s   %7s   %7s   %7s",
+            System.out.println(String.format("      Date%10s%10s%10s%10s%10s%10s%10s%10s%10s%10s%10s",
                     "Doverie", "Saglasie", "Rodina", "Allianz", "NN", "Sila", "Badeshte", "Toplina", "POI", "DalBogg",
                     "VOLIDEX"));
         }
@@ -100,10 +100,12 @@ public abstract class PokReaderSingleSharePrices implements PokSharesAtDate {
             return false;
         }
 
-        System.out.print(String.format("%02d.%02d.%04d  ", ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
+        System.out.print(String.format("%02d.%02d.%04d", ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
+         
         for (double val : vals) {
-            System.out.print(String.format("%7.5f   ", val));
+            System.out.print(String.format("%10.5f",  val));            
         }
+            
 
         System.out.println();
 
