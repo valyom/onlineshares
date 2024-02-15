@@ -13,17 +13,22 @@ public class OnlinePokShares {
 
     private static void printHelp() {
         System.out.println("\nPrints the share prices for a day or for a period.\n");
-        System.out.println("Command Lie :\t [-w dpf|upf|ppf|all] [-d date] [-h]");
-        System.out.println("-w :\t What fond to print. default to 'all'. Also possible 'dpf', 'upf', 'ppf'");
-        System.out.println("    \t If -d is ommitted today is reported if there are data available.");
-        System.out.println("    \t Else the first closest day with data before today this is reported.");
-        System.out.println("-d :\t For which date to report or start of the period if -d1.");
-        System.out.println("    \t If it is a holyday, the first working date before this is reported.");
-        System.out.println("    \t In case what is not 'all', this gives the first date of a period ending");
-        System.out.println("    \t with today, which will be reported one day per line. Default - today");
-        System.out.println("-d1 :\t End date of the period to report . Default or error - today");
+        System.out.println("Command Lie :\t [-w dpf|upf|ppf|all] [-d date] [-d1 date] [-h]");
+        
+        System.out.println("-w \t What to print. Default to 'all'. Also possible 'dpf', 'upf', 'ppf'");
+        System.out.println("   \t all will not include usd cources.");
+        System.out.println("   \t If -d is ommitted today is reported if there are data available.");
+        System.out.println("   \t Else the first closest day with data before today this is reported.\n");
+        
+        System.out.println("-d \t First date of the period or the exact date if no -d1 privided.");
+        System.out.println("   \t Default today.\n");
 
-        System.out.println("-h :\t Prints this help.");
+        System.out.println("-d1\t End date of the period. Default or error - today\n");
+
+        System.out.println("   \t d is always the first, d1 is always the last. If d > d1 the");
+        System.out.println("   \t dates will be reported from d to d1 nevertheless\n");
+        
+        System.out.println("-h \t Prints this help.");
     };
 
     private int strToInt(String input) {
@@ -91,7 +96,7 @@ public class OnlinePokShares {
         return whatParamOk;
     }
 
-    private void run(String[] args) {
+    public void run(String[] args) {
         if (!this.parseCommandLine(args)) {
             return;
         }
@@ -104,8 +109,7 @@ public class OnlinePokShares {
     }
 
     public static void main(String[] args) {
-
-        String[] params =    {"-w", "all", "-d", "14.02.2024"   };
+        String[] params =    {"-w", "dpf", "-d", "14.02.2024"   };
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
 
     }
