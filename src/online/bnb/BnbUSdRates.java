@@ -14,7 +14,7 @@ public class BnbUSdRates implements PokSharesAtDate {
     final private static String urlDateFormat = "https://www.bnb.bg/Statistics/StExternalSector/StExchangeRates/StERForeignCurrencies/index.htm?downloadOper=&group1=first&firstDays=%02d&firstMonths=%02d&firstYear=%04d&search=true&showChart=false&showChartButton=false";
     final private static String usdCaption = "Щатски долар";
 
-    public List<Double> sharePricesValidAtDate(LocalDate date) {
+    public void sharePricesValidAtDate(LocalDate date) {
         DatesIterator it = new DatesIterator(date,  GlobalDefines.MAX_DAYS_BACK);
         List<Double> r = null;
 
@@ -22,7 +22,6 @@ public class BnbUSdRates implements PokSharesAtDate {
             r = processDate(d);
         }
 
-        return r;
     };
 
     public void sharePricesPeriod(LocalDate date, LocalDate date1) {

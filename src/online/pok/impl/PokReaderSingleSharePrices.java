@@ -20,17 +20,15 @@ public abstract class PokReaderSingleSharePrices implements PokSharesAtDate {
     }
 
     // interface implementation
-    public List<Double> sharePricesValidAtDate(LocalDate date) {
-        List<Double> result = null;
+    public void sharePricesValidAtDate(LocalDate date) {
+        boolean done = false;
         DatesIterator it = new DatesIterator(date, GlobalDefines.MAX_DAYS_BACK);
 
         this.printCaptionIfNot();
-        for (LocalDate d = it.first(); result == null && it.isInRange(); d = it.next()) {
+        for (LocalDate d = it.first(); !done  && it.isInRange(); d = it.next()) {
 
-            result = dumpRow(d);
+            done = dumpRow(d);
         }
-
-        return result;
     }
 
     // interface implementation
@@ -59,7 +57,7 @@ public abstract class PokReaderSingleSharePrices implements PokSharesAtDate {
         List<Double> vals = new ArrayList<>();
 
         for (int pokIdx = 0; pokIdx < PokReaderDefines.POKS.length; pokIdx++) {
-            RingIndex ri = RingIndexFactory.create(pokIdx, rows.length); // optimization
+            RingIndex ri = RingIndexFactory.create(pokIdx <rows.length ?pokIdx  : 0, rows.length); // optimization
             String curRes = "1.0";
 
             for (int i = ri.getNext(); i >= 0; i = ri.getNext()) {
@@ -96,10 +94,10 @@ public abstract class PokReaderSingleSharePrices implements PokSharesAtDate {
         return v;
     }
 
-    private List<Double> dumpRow(LocalDate ld) {
+    private boolean dumpRow(LocalDate ld) {
         List<Double> vals = this.atExactDate(ld);
         if (vals == null) {
-            return null;
+            return false;
         }
 
         System.out.print(String.format("%02d.%02d.%04d  ", ld.getDayOfMonth(), ld.getMonthValue(), ld.getYear()));
@@ -109,6 +107,6 @@ public abstract class PokReaderSingleSharePrices implements PokSharesAtDate {
 
         System.out.println();
 
-        return vals;
+        return true;
     }
 }

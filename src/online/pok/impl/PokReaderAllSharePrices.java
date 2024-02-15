@@ -1,7 +1,6 @@
 package online.pok.impl;
 
 import java.time.LocalDate;
-import java.util.List;
 import online.dates.DatesIterator;
 import online.pagereader.PageTextDownloader;
 import online.pok.contract.PokSharesAtDate;
@@ -17,18 +16,17 @@ public class PokReaderAllSharePrices implements PokSharesAtDate {
 
     }
 
-    public List<Double> sharePricesValidAtDate(LocalDate date ) {
+    public void sharePricesValidAtDate(LocalDate date ) {
+        boolean done  = false;
         DatesIterator it = new DatesIterator(date, GlobalDefines.MAX_DAYS_BACK);
 
-        for (LocalDate d = it.first(); it.isInRange(); d = it.next()) {
+        for (LocalDate d = it.first(); !done && it.isInRange(); d = it.next()) {
             String[] rows = getOnlileData(d);
             if (rows.length >= MIN_NUM_FUNDS) {
-                processData(rows, d);
-                return null;
+                done = processData(rows, d);
+
             }
         }
-
-        return null;
     }
 
 
@@ -39,10 +37,10 @@ public class PokReaderAllSharePrices implements PokSharesAtDate {
         }
     }
 
-    private void processData(String[] rows, LocalDate date) {
+    private boolean processData(String[] rows, LocalDate date) {
         final String invalidValue = "1.00000";
         if (rows.length < MIN_NUM_FUNDS) {
-            return;
+            return false;
         }
 
         System.out.println(String.format("%31s : %04d-%02d-%02d", "Reported Date",
@@ -71,6 +69,8 @@ public class PokReaderAllSharePrices implements PokSharesAtDate {
             System.out.println(String.format("%31s : %-7s;  %-7s;  %-7s", PokReaderDefines.POKS[pokIdx], dpfValue,
                     ppfValue, upfValue));
         }
+
+        return true;
 
     }
 

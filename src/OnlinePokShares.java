@@ -7,7 +7,7 @@ import online.pok.impl.PokReaderSharePricesFactory;
 
 public class OnlinePokShares {
     private static String what = "all";
-    private static LocalDate today = LocalDate.now();
+    private static LocalDate firstDate = LocalDate.now();
     private static LocalDate endDate = null;
     String[] whatsAllowed = { "all", "dpf", "ppf", "upf", "usd" };
 
@@ -45,7 +45,7 @@ public class OnlinePokShares {
             }
         } catch (DateTimeParseException e) {
         }
-        return today;
+        return firstDate;
     }
 
     private boolean parseCommandLine(String[] args) {
@@ -59,7 +59,7 @@ public class OnlinePokShares {
                 }
             } else if ("-d".compareToIgnoreCase(args[k]) == 0) {
                 if (args.length > k + 1) {
-                    today = parseDateStr(args[k + 1]);
+                    firstDate = parseDateStr(args[k + 1]);
                     ++numSubParams;
                 }
             } else if ("-d1".compareToIgnoreCase(args[k]) == 0) {
@@ -76,7 +76,7 @@ public class OnlinePokShares {
             k += 1 + numSubParams;
         }
 
-        if (today.isAfter(LocalDate.now()) || today.isBefore(LocalDate.of(2010, 1, 10))) {
+        if (firstDate.isAfter(LocalDate.now()) || firstDate.isBefore(LocalDate.of(2010, 1, 10))) {
             return false;
         }
 
@@ -96,18 +96,18 @@ public class OnlinePokShares {
             return;
         }
 
-        if (endDate != null && !today.isEqual(endDate)) {
-            PokReaderSharePricesFactory.create(what).sharePricesPeriod(today, endDate);
+        if (endDate != null && !firstDate.isEqual(endDate)) {
+            PokReaderSharePricesFactory.create(what).sharePricesPeriod(firstDate, endDate);
         } else {
-            PokReaderSharePricesFactory.create(what).sharePricesValidAtDate(today);
+            PokReaderSharePricesFactory.create(what).sharePricesValidAtDate(firstDate);
         }
     }
 
     public static void main(String[] args) {
 
-        String[] params = { "-w", "all"}; // , "-d", "24.01.2024", "-d1", "12.01.2024"  };
+        String[] params =    {"-w", "all", "-d", "14.02.2024"   };
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
 
     }
-
 }
+
