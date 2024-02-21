@@ -1,8 +1,6 @@
 package online.bnb;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import online.dates.DatesIterator;
 import online.pagereader.PageTextDownloader;
@@ -16,9 +14,9 @@ public class BnbUSdRates implements PokSharesAtDate {
 
     public void sharePricesValidAtDate(LocalDate date) {
         DatesIterator it = new DatesIterator(date,  GlobalDefines.MAX_DAYS_BACK);
-        List<Double> r = null;
+        boolean r = false;
 
-        for (LocalDate d = it.first(); r == null && it.isInRange(); d = it.next()) {
+        for (LocalDate d = it.first(); r == false && it.isInRange(); d = it.next()) {
             r = processDate(d);
         }
 
@@ -31,8 +29,7 @@ public class BnbUSdRates implements PokSharesAtDate {
         }
     }
 
-    private List<Double> processDate(LocalDate date) {
-        List<Double> res = null;
+    private boolean processDate(LocalDate date) {
         String eol = "" + (char) 13;
         String[] rows = PageTextDownloader.download(
                 String.format(BnbUSdRates.urlDateFormat, date.getDayOfMonth(), date.getMonthValue(), date.getYear()),
@@ -43,16 +40,12 @@ public class BnbUSdRates implements PokSharesAtDate {
         for (int i = 0; i < rows.length; i++) {
             if (rows[i].contains(usdCaption)) {
                 String[] usdAttr = rows[i + 3].split("[<>]");
-                System.out.println(String.format("%02d.%02d.%04d  :  %-7s", date.getDayOfMonth(), date.getMonthValue(),
-                        date.getYear(), usdAttr[2]));
+                System.out.println(String.format("%s  :  %-7s", GlobalDefines.date2Str(date), usdAttr[2]));
 
-                res = new ArrayList<>();
-                res.add(Double.parseDouble(usdAttr[2].replaceAll(",", ".")));
-
-                return res;
+                return true;
             }
 
         }
-        return res;
+        return false;
     }
 }

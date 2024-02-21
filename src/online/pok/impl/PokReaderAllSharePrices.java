@@ -43,10 +43,7 @@ public class PokReaderAllSharePrices implements PokSharesAtDate {
             return false;
         }
 
-        System.out.println(String.format("%31s : %04d-%02d-%02d", "Reported Date",
-                date.getYear(),
-                date.getMonthValue(),
-                date.getDayOfMonth()));
+        System.out.println(String.format("%31s : %s", "Reported Date", GlobalDefines.date2Str(date)));
         System.out.println(String.format("%31s : %7s   %7s   %7s", "POK", "DPF", "PPF", "UPF"));
 
         for (int pokIdx = 0; pokIdx < PokReaderDefines.POKS.length; pokIdx++) {
