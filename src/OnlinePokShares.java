@@ -109,8 +109,9 @@ public class OnlinePokShares {
     }
 
     public static void main(String[] args) {
-        String[] params = {"-w", "all" };
-        (new OnlinePokShares()).run(args.length > 0 ? args : params);
+       // String[] params = {"-w", "dpf" , "-d", "13.03.2024"};
+       String[] params = {"-w", "all" }; 
+       (new OnlinePokShares()).run(args.length > 0 ? args : params);
 
     }
 }
