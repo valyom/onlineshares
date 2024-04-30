@@ -43,10 +43,18 @@ public class OnlinePokShares {
     private LocalDate parseDateStr(String dateStr) {
         // String date = args[k + 1].replaceAll("\\.", "-").replaceAll("\\/", "-");
         try {
-            String[] dateParts = dateStr.split("[-./]");
+            // in case of 03.04.2024  => will assume  Third of Aprinl (3rd April)
+            //in case of 03/04/2024  => will assume   4th   of March  (March, 4th)
+            boolean bgFormat = dateStr.indexOf(".") >=0;    
+
+
+            String[] dateParts = dateStr.split("[./]");
             if (dateParts.length == 3) {
-                return LocalDate.parse(String.format("%04d-%02d-%02d", strToInt(dateParts[2]), strToInt(dateParts[1]),
-                        strToInt(dateParts[0])), GlobalDefines.yyyyMMdd);
+                int y = strToInt(dateParts[2]);
+                int d = bgFormat ?  strToInt(dateParts[0]) : strToInt(dateParts[1]);
+                int m = bgFormat ?  strToInt(dateParts[1]) : strToInt(dateParts[0]);
+
+                return   LocalDate.parse(String.format("%04d-%02d-%02d",y,m,d), GlobalDefines.yyyyMMdd);
             }
         } catch (DateTimeParseException e) {
         }
@@ -109,9 +117,9 @@ public class OnlinePokShares {
     }
 
     public static void main(String[] args) {
-       // String[] params = {"-w", "dpf" , "-d", "13.03.2024"};
-       String[] params = {"-w", "all" }; 
-       (new OnlinePokShares()).run(args.length > 0 ? args : params);
+        String[] params = {"-w", "all" };
+       
+        (new OnlinePokShares()).run(args.length > 0 ? args : params);
 
     }
 }
