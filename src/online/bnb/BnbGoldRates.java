@@ -54,7 +54,7 @@ public class BnbGoldRates extends BnbRates {
 
     private List<Function<String, String>> converterS = null;
     private Double goldNow = 0.;
-    
+
     private void prepareConvertes () {
         goldNow = goldGurPrice( );
         converterS = new ArrayList<>();
@@ -80,5 +80,8 @@ public class BnbGoldRates extends BnbRates {
     public BnbGoldRates() {
         super();
         prepareConvertes ();
+
+        
+        System.out.println("Gold price is the latest - implementatio not finished");
     }
 }
