@@ -12,8 +12,10 @@ public class PageTextDownloader {
     private interface Identity {
         String identity(String s);
     }
-
-    public static String download(String url, String cookies, int firstLine, String lineSeparator) {
+    public static String download(String url, String cookies, int firstLine, String lineSeparator){
+        return download(url, cookies, firstLine, -1, lineSeparator);
+    }
+    public static String download(String url, String cookies, int firstLine, int lastLine, String lineSeparator) {
         if (url == null) {
             return "";
         }
@@ -43,10 +45,21 @@ public class PageTextDownloader {
             Identity implementation = (lineSeparator == null) ? (input) -> input : (input) -> input + lineSeparator;
 
             int lineIndex = 0;
-            while ((inputLine = in.readLine()) != null) {
-                if (lineIndex++ >= firstLine) {
-                    // response.append(identity(myLambda, inputLine));
-                    response.append( implementation.identity( inputLine));
+            // can merge if and else but this is faster
+            if (lastLine > 0) {
+                while ( (lineIndex <= lastLine) && ((inputLine = in.readLine()) != null)) {
+                    if (lineIndex++ >= firstLine) {
+                        // response.append(identity(myLambda, inputLine));
+                        response.append( implementation.identity( inputLine));
+                    }
+                }
+            }
+            else {
+                while ( ((inputLine = in.readLine()) != null)) {
+                    if (lineIndex++ >= firstLine) {
+                        // response.append(identity(myLambda, inputLine));
+                        response.append( implementation.identity( inputLine));
+                    }
                 }
             }
 

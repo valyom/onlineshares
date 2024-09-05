@@ -9,7 +9,7 @@ public class OnlinePokShares {
     private static String what = "all";
     private static LocalDate firstDate = LocalDate.now();
     private static LocalDate endDate = null;
-    String[] whatsAllowed = { "all", "dpf", "ppf", "upf", "usd" };
+    String[] whatsAllowed = { "all", "dpf", "ppf", "upf", "bnb", "usd", "xau" };
 
     private static void printHelp() {
         System.out.println("\nPrints the share prices for a day or for a period.\n");
@@ -117,7 +117,7 @@ public class OnlinePokShares {
     }
 
     public static void main(String[] args) {
-        String[] params = {"-w", "all" };
+        String[] params = { "-w", "bnb" , "-d", "04.09.2024" };
        
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
 
