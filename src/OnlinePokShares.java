@@ -117,7 +117,7 @@ public class OnlinePokShares {
     }
 
     public static void main(String[] args) {
-        String[] params = { "-w", "bnb" , "-d", "04.09.2024" };
+        String[] params = { "-w", "xau" , "-d", "04.09.2024" };
        
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
 

@@ -1,8 +1,8 @@
 package online.pok.impl;
 
 import online.bnb.BnbGoldRates;
-import online.bnb.BnbRates;
 import online.bnb.BnbUsdRates;
+import online.bnb.BnbUsdXauRates;
 import online.pok.contract.PokSharesAtDate;
 
 public class PokReaderSharePricesFactory<T>  {
@@ -11,7 +11,7 @@ public class PokReaderSharePricesFactory<T>  {
       if ("dpf".compareToIgnoreCase(fund) == 0) return new PokReaderDpfSharePrices();
       if ("upf".compareToIgnoreCase(fund) == 0) return new PokReaderUpfSharePrices();
       if ("ppf".compareToIgnoreCase(fund) == 0) return new PokReaderPpfSharePrices();
-      if ("bnb".compareToIgnoreCase(fund) == 0) return new BnbRates();
+      if ("bnb".compareToIgnoreCase(fund) == 0) return new BnbUsdXauRates();
       if ("usd".compareToIgnoreCase(fund) == 0) return new BnbUsdRates();
       if ("xau".compareToIgnoreCase(fund) == 0) return new BnbGoldRates();
 
