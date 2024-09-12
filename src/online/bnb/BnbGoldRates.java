@@ -59,8 +59,8 @@ public class BnbGoldRates extends BnbRates {
         goldNow = goldGurPrice( );
         converterS = new ArrayList<>();
         converterS.add(s -> String.format("%-7.2f",  goldNow ));
-        converterS.add(s -> String.format("%-7.2f", Double.valueOf(s) * goldNow / 31.1));
         converterS.add(s -> String.format("%-7.2f", Double.valueOf(s) * goldNow ));
+        converterS.add(s -> String.format("%-7.2f", Double.valueOf(s) * goldNow / 31.1));
         provideConverter(converterS);
     }
 

@@ -13,7 +13,7 @@ public class OnlinePokShares {
 
     private static void printHelp() {
         System.out.println("\nPrints the share prices for a day or for a period.\n");
-        System.out.println("Command Lie :\t [-w dpf|upf|ppf|all] [-d date] [-d1 date] [-h]");
+        System.out.println("Command Lie :\t [-w dpf|upf|ppf|all|usd|xau] [-d date] [-d1 date] [-h]");
 
         System.out.println("-w \t What to print. Default to 'all'. Also possible 'dpf', 'upf', 'ppf'");
         System.out.println("   \t all will not include usd cources.");
@@ -117,10 +117,9 @@ public class OnlinePokShares {
     }
 
     public static void main(String[] args) {
-        String[] params = { "-w", "xau" , "-d", "04.09.2024" };
+        String[] params = { "-w", "all"};// "xau" , "-d", "04.09.2024" };
        
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
-
     }
 }
 
