@@ -108,6 +108,10 @@ public class OnlinePokShares {
         }
     }
 
+
+    // insert into doverie (date, dpf, upf, ppf)
+    // values ('01.01.2020',2.2,4.5,2.1)
+    // on conflict (date) do update set  dpf = excluded.dpf, upf = excluded.upf, ppf = excluded.ppf;
     public static void main(String[] args) {
         String[] params = {"-w", "all" };
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
