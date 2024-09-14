@@ -63,7 +63,7 @@ public class PokReaderAllSharePrices implements PokSharesAtDate {
                 }
             }
 
-            System.out.println(String.format("%31s : %-7s;  %-7s;  %-7s", PokReaderDefines.POKS[pokIdx], dpfValue,
+            System.out.println(String.format("%31s : %-7s;  %-7s;  %-7s", PokReaderDefines.POKS_LATIN[pokIdx], dpfValue,
                     ppfValue, upfValue));
         }
 

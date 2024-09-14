@@ -9,11 +9,11 @@ public class OnlinePokShares {
     private static String what = "all";
     private static LocalDate firstDate = LocalDate.now();
     private static LocalDate endDate = null;
-    String[] whatsAllowed = { "all", "dpf", "ppf", "upf", "usd" };
+    String[] whatsAllowed = { "all", "dpf", "ppf", "upf", "bnb", "usd", "xau" };
 
     private static void printHelp() {
         System.out.println("\nPrints the share prices for a day or for a period.\n");
-        System.out.println("Command Lie :\t [-w dpf|upf|ppf|all] [-d date] [-d1 date] [-h]");
+        System.out.println("Command Lie :\t [-w dpf|upf|ppf|all|usd|xau] [-d date] [-d1 date] [-h]");
 
         System.out.println("-w \t What to print. Default to 'all'. Also possible 'dpf', 'upf', 'ppf'");
         System.out.println("   \t all will not include usd cources.");
@@ -43,10 +43,18 @@ public class OnlinePokShares {
     private LocalDate parseDateStr(String dateStr) {
         // String date = args[k + 1].replaceAll("\\.", "-").replaceAll("\\/", "-");
         try {
-            String[] dateParts = dateStr.split("[-./]");
+            // in case of 03.04.2024  => will assume  Third of Aprinl (3rd April)
+            //in case of 03/04/2024  => will assume   4th   of March  (March, 4th)
+            boolean bgFormat = dateStr.indexOf(".") >=0;    
+
+
+            String[] dateParts = dateStr.split("[./]");
             if (dateParts.length == 3) {
-                return LocalDate.parse(String.format("%04d-%02d-%02d", strToInt(dateParts[2]), strToInt(dateParts[1]),
-                        strToInt(dateParts[0])), GlobalDefines.yyyyMMdd);
+                int y = strToInt(dateParts[2]);
+                int d = bgFormat ?  strToInt(dateParts[0]) : strToInt(dateParts[1]);
+                int m = bgFormat ?  strToInt(dateParts[1]) : strToInt(dateParts[0]);
+
+                return   LocalDate.parse(String.format("%04d-%02d-%02d",y,m,d), GlobalDefines.yyyyMMdd);
             }
         } catch (DateTimeParseException e) {
         }
@@ -113,9 +121,9 @@ public class OnlinePokShares {
     // values ('01.01.2020',2.2,4.5,2.1)
     // on conflict (date) do update set  dpf = excluded.dpf, upf = excluded.upf, ppf = excluded.ppf;
     public static void main(String[] args) {
-        String[] params = {"-w", "all" };
+        String[] params = { "-w", "all"};// "xau" , "-d", "04.09.2024" };
+       
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
-
     }
 }
 
