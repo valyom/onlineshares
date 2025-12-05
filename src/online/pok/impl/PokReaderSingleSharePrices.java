@@ -18,13 +18,10 @@ public abstract class PokReaderSingleSharePrices implements PokSharesAtDate {
 
     // interface implementation
     public void sharePricesValidAtDate(LocalDate date) {
-        boolean done = false;
         DatesIterator it = new DatesIterator(date, GlobalDefines.MAX_DAYS_BACK);
 
         this.printCaptionIfNot();
-        for (LocalDate d = it.first(); !done  && it.isInRange(); d = it.next()) {
-            done = atExactDate(d);
-        }
+        for (LocalDate d = it.first(); !atExactDate(d) && it.isInRange(); d = it.next());
     }
 
     // interface implementation
