@@ -31,13 +31,13 @@ public class BnbGoldRates extends BnbRates {
         final String markAfter = "</span>";
         double result = 0.0;
         
-        String ss = PageTextDownloader.download(URL_GOLD_LAST_PRICE,null,1060, 1075, null); 
-        //restoreSystemOut();
-         
+        String ss = PageTextDownloader.download(URL_GOLD_LAST_PRICE,markBefore,null,100, 4100, null).trim(); 
+        //restoreSystemOut(); 
         int pos =  ss.indexOf(markBefore) + markBefore.length();
         if(pos >= 0){
             int pos2 = ss.indexOf(markAfter, pos);
             String prc = ss.substring(pos, pos2) ;
+            prc = prc.replace(",", "").trim();
             result = Double.valueOf(prc);
             // System.out.println("1 oz gold price now :" + prc);
             // System.out.println("1 gramm gold price in leva now :" + 1.76998 * result/ 31.1);
@@ -82,6 +82,6 @@ public class BnbGoldRates extends BnbRates {
         prepareConvertes ();
 
         
-        System.out.println("Gold price is the latest - implementatio not finished");
+        System.out.println("Gold price is the latest - implementation not finished");
     }
 }

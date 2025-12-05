@@ -13,9 +13,14 @@ public class PageTextDownloader {
         String identity(String s);
     }
     public static String download(String url, String cookies, int firstLine, String lineSeparator){
-        return download(url, cookies, firstLine, -1, lineSeparator);
+        return download(url,null, cookies, firstLine, -1, lineSeparator);
     }
+
     public static String download(String url, String cookies, int firstLine, int lastLine, String lineSeparator) {
+        return download(url,null, cookies, firstLine, lastLine, lineSeparator);
+    }
+    
+    public static String download(String url, String mark, String cookies, int firstLine, int lastLine, String lineSeparator) {
         if (url == null) {
             return "";
         }
@@ -44,13 +49,20 @@ public class PageTextDownloader {
 
             Identity implementation = (lineSeparator == null) ? (input) -> input : (input) -> input + lineSeparator;
 
+            boolean append = false;
             int lineIndex = 0;
             // can merge if and else but this is faster
             if (lastLine > 0) {
                 while ( (lineIndex <= lastLine) && ((inputLine = in.readLine()) != null)) {
                     if (lineIndex++ >= firstLine) {
                         // response.append(identity(myLambda, inputLine));
-                        response.append( implementation.identity( inputLine));
+                        append = mark == null || inputLine.contains(mark) ; 
+                        if (append){
+                            response.append( implementation.identity( inputLine));
+                            if (mark != null){
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -58,7 +70,13 @@ public class PageTextDownloader {
                 while ( ((inputLine = in.readLine()) != null)) {
                     if (lineIndex++ >= firstLine) {
                         // response.append(identity(myLambda, inputLine));
-                        response.append( implementation.identity( inputLine));
+                        append = mark == null || inputLine.contains(mark) ; 
+                        if (append){
+                            response.append( implementation.identity( inputLine));
+                            if (mark != null){
+                                break;
+                            }
+                        }
                     }
                 }
             }
