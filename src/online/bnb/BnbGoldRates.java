@@ -31,7 +31,7 @@ public class BnbGoldRates extends BnbRates {
         final String markAfter = "</span>";
         double result = 0.0;
         
-        String ss = PageTextDownloader.download(URL_GOLD_LAST_PRICE,markBefore,null,100, 4100, null).trim(); 
+        String ss = PageTextDownloader.download(URL_GOLD_LAST_PRICE, markBefore,null,1500, 5600, null).trim(); 
         //restoreSystemOut(); 
         int pos =  ss.indexOf(markBefore) + markBefore.length();
         if(pos >= 0){

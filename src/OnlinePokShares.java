@@ -121,7 +121,7 @@ public class OnlinePokShares {
     // values ('01.01.2020',2.2,4.5,2.1)
     // on conflict (date) do update set  dpf = excluded.dpf, upf = excluded.upf, ppf = excluded.ppf;
     public static void main(String[] args) {
-        String[] params = { "-w", "xau"};// "xau" , "-d", "04.09.2024" };
+        String[] params = { "-w", "all"};// , "-d", "04.09.2024" };
        
         (new OnlinePokShares()).run(args.length > 0 ? args : params);
     }
